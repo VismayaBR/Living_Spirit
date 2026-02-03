@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/l10n/app_localizations.dart';
@@ -172,7 +174,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               (index) {
                                 final isSelected =
                                     productDetailsScreenController
-                                        .selectedSizeIndex ==
+                                        .selectedCategoryIndex ==
                                     index;
 
                                 return Container(
@@ -197,7 +199,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         ? primaryColor
                                         : hintColorColor,
                                     onTap: () {
-                                      productDetailsScreenController.selectSize(
+                                      productDetailsScreenController.selectCategory(
                                         index,
                                       );
                                     },
@@ -354,7 +356,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   //           ),
                   //   ],
                   // ),
-                  if (productDetailsScreenController.selectedSizeIndex != null)
+                  if (productDetailsScreenController.selectedCategoryIndex != null)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -491,7 +493,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 onPressed: () {
                   Get.until(
                     (route) =>
-                        Get.currentRoute == RouteList.categorySelectionScreen,
+                        Get.currentRoute == RouteList.initial,
                   );
                 },
                 borderRadius: 0,

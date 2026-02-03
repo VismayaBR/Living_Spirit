@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/domain/params/product_list_args.dart';
@@ -70,9 +72,7 @@ class BrandGridView extends StatelessWidget {
                           isSelected: isSelected,
                           onTap: () {
                             brandSelectionController.selectAllBrands();
-                            consoleLog(
-                          "branch --- : ${brandSelectionController.args.branch}",
-                        );
+                            
 
                         if (brandSelectionController.selectedBrandIndex == -2) {
                           showMessage("Please select a brand!");
@@ -102,8 +102,9 @@ class BrandGridView extends StatelessWidget {
                             RouteList.productListScreen,
                             arguments: ProductListArgs(
                               brandId: brandId ?? "0",
-                              size: brandSelectionController.args.size
-                                  .toString(),
+                              // size: brandSelectionController.args.size
+                              //     .toString(),
+                               mainCategory: brandSelectionController.args.mainCategory,
                               isEnglish:
                                   brandSelectionController.args.isEnglish,
                               brandName:
@@ -135,10 +136,7 @@ class BrandGridView extends StatelessWidget {
                         isSelected: isSelected,
                         onTap: () {
                           brandSelectionController.selectBrand(index - 1);
-                          consoleLog(
-                          "branch --- : ${brandSelectionController.args.branch}",
-                        );
-
+                        
                         if (brandSelectionController.selectedBrandIndex == -2) {
                           showMessage("Please select a brand!");
                         } else {
@@ -167,8 +165,9 @@ class BrandGridView extends StatelessWidget {
                             RouteList.productListScreen,
                             arguments: ProductListArgs(
                               brandId: brandId ?? "0",
-                              size: brandSelectionController.args.size
-                                  .toString(),
+                              // size: brandSelectionController.args.size
+                              //     .toString(),
+                              mainCategory: brandSelectionController.args.mainCategory,
                               isEnglish:
                                   brandSelectionController.args.isEnglish,
                               brandName:

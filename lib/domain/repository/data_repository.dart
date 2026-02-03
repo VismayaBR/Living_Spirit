@@ -16,7 +16,7 @@ abstract class DataRepository {
     Map<String, dynamic> params,
   );
 
- //Size List
+ //Category List
    Future<Either<AppError, CategoryListModel>> categoryList(
     Map<String, dynamic> params,
   );

@@ -1,3 +1,5 @@
+
+
 // To parse this JSON data, do
 //
 //     final productListModel = productListModelFromJson(jsonString);
@@ -135,13 +137,13 @@ class Datum extends ProductEntity {
 }
 
 class Brand {
-  final int id;
+  final String id;
   final String name;
 
   Brand({required this.id, required this.name});
 
   factory Brand.fromJson(Map<String, dynamic> json) =>
-      Brand(id: json["id"], name: json["name"]??"");
+      Brand(id: json["id"].toString(), name: json["name"]??"");
 
   Map<String, dynamic> toJson() => {"id": id, "name": name};
 }
@@ -149,7 +151,7 @@ class Brand {
 class Inventory {
   final int id;
   final Brand branch;
-  final int quantity;
+  final String quantity;
   final bool isLowStock;
   final bool isOutOfStock;
 
@@ -164,7 +166,7 @@ class Inventory {
   factory Inventory.fromJson(Map<String, dynamic> json) => Inventory(
     id: json["id"],
     branch: Brand.fromJson(json["branch"]),
-    quantity: json["quantity"],
+    quantity: json["quantity"].toString(),
     isLowStock: json["is_low_stock"],
     isOutOfStock: json["is_out_of_stock"],
   );

@@ -1,3 +1,4 @@
+
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,10 @@ class ProductDetailsScreenController extends ChangeNotifier {
   List<BannerEntity> productBanner = [];
   ProductEntity? productData;
   List<String> image_360s = [];
-  int? selectedSizeIndex;
+  int? selectedCategoryIndex;
 
-  selectSize(int index) {
-    selectedSizeIndex = index;
+  selectCategory(int index) {
+    selectedCategoryIndex = index;
     notifyListeners(); 
   }
 
@@ -63,9 +64,9 @@ List<String> get availableBranches {
   if (productData?.relatedSizeList == null) return [];
 
   // If size selected → show ONLY branches with quantity != 0
-  if (selectedSizeIndex != null) {
+  if (selectedCategoryIndex != null) {
     final branches =
-        productData!.relatedSizeList![selectedSizeIndex!].branches;
+        productData!.relatedSizeList![selectedCategoryIndex!].branches;
 
     return branches
         .where((b) => b.quantity != 0)
@@ -130,8 +131,7 @@ List<String> get availableBranches {
   getData() async {
   appError = null;
 
-  // 🔐 Preserve selected size
-  final int? previousSelectedIndex = selectedSizeIndex;
+  final int? previousSelectedIndex = selectedCategoryIndex;
 
   final response = await productDetailsUseCase(
     ProductDetailsParams(id: args.id),
@@ -150,7 +150,7 @@ List<String> get availableBranches {
             productData!.relatedSizeList != null &&
             previousSelectedIndex <
                 productData!.relatedSizeList!.length) {
-          selectedSizeIndex = previousSelectedIndex;
+          selectedCategoryIndex = previousSelectedIndex;
         }
 
         if (r.data.images360!.isNotEmpty) {
@@ -221,14 +221,13 @@ List<String> get availableBranches {
   }
 
 BranchAvailabilityStatus get branchAvailabilityStatus {
-  if (selectedSizeIndex == null || productData == null) {
+  if (selectedCategoryIndex == null || productData == null) {
     return BranchAvailabilityStatus.notAvailable;
   }
 
   final branches =
-      productData!.relatedSizeList![selectedSizeIndex!].branches;
+      productData!.relatedSizeList![selectedCategoryIndex!].branches;
 
-  // ✅ Check if ANY branch has stock
   final hasAnyStock = branches.any((b) {
     final qty = int.tryParse(b.quantity.toString()) ?? 0;
     return qty > 0;
@@ -264,10 +263,10 @@ BranchAvailabilityStatus get branchAvailabilityStatus {
 
 
 List<String> get otherAvailableBranchNames {
-  if (selectedSizeIndex == null || productData == null) return [];
+  if (selectedCategoryIndex == null || productData == null) return [];
 
   return productData!
-      .relatedSizeList![selectedSizeIndex!]
+      .relatedSizeList![selectedCategoryIndex!]
       .branches
       .where((b) {
         final qty = int.tryParse(b.quantity.toString()) ?? 0;

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/l10n/app_localizations.dart';
@@ -81,7 +82,7 @@ class ProductListScreen extends StatelessWidget {
                             isBold: true,
                           ),
                           DefaultText(
-                            title: controller.args.size,
+                            title: controller.args.mainCategory.toString(),
                             fontSize: isTab()
                                 ? defaultPadding * 1.5
                                 : defaultPadding * .8,
@@ -102,12 +103,16 @@ class ProductListScreen extends StatelessWidget {
                             fontFamily: "Poppins-Medium",
                             isBold: true,
                           ),
-                          DefaultText(
-                            title: controller.args.brandName,
-                            fontSize: isTab()
-                                ? defaultPadding * 1.5
-                                : defaultPadding * .8,
-                            fontFamily: "Poppins-Medium",
+                          Expanded(
+                            child: DefaultText(
+                              title: controller.args.brandName,
+                              maxLine: 1,
+                              
+                              fontSize: isTab()
+                                  ? defaultPadding * 1.5
+                                  : defaultPadding * .8,
+                              fontFamily: "Poppins-Medium",
+                            ),
                           ),
                         ],
                       ),
@@ -278,7 +283,7 @@ class ProductListScreen extends StatelessWidget {
             text: AppLocalizations.of(context)!.back_to_home,
             onPressed: () {
               Get.until(
-                (route) => Get.currentRoute == RouteList.categorySelectionScreen,
+                (route) => Get.currentRoute == RouteList.initial,
               );
             },
             borderRadius: 0,

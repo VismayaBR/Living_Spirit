@@ -1,3 +1,5 @@
+
+
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
@@ -7,7 +9,7 @@ class ProductListParams extends Equatable {
   String? branchId;
   String? size;
   String? color;
-  String? mainCategoryId;
+  String? mainCategory;
   String? maxPrice;
   int? perPage;
   int? page;
@@ -22,7 +24,7 @@ class ProductListParams extends Equatable {
     this.branchId,
     this.size,
     this.color,
-    this.mainCategoryId,
+    this.mainCategory,
     this.maxPrice,
     this.perPage=16,
     this.page,
@@ -36,7 +38,7 @@ class ProductListParams extends Equatable {
       "brand_id": brandId,
       "branch_id": branchId,
       "color": color,
-      "main_category_id": mainCategoryId,
+      "main_category": mainCategory,
       "max_price": maxPrice,
       "per_page":perPage,
       "page":page,
@@ -49,3 +51,4 @@ class ProductListParams extends Equatable {
   @override
   List<Object?> get props => [];
 }
+

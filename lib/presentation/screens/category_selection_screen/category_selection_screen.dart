@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/l10n/app_localizations.dart';
@@ -52,6 +54,27 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                     "assets/logo.png",
                     width: isTab() ? defaultPadding * 9 : defaultPadding * 5,
                   ),
+                  defaultSpacer,
+                  Row(
+                    children: [
+                      Expanded(flex: 5, child: TextFormField()),
+                      defaultSpacerHorizontalSmall,
+                      GestureDetector(
+                        onTap: (){},
+                        child: Container(
+                          decoration:BoxDecoration(shape: BoxShape.circle,color: blackColor,),
+                          
+                          child: Padding(
+                            padding: const EdgeInsets.all(9.0),
+                            child: Center(
+                              child: Icon(Icons.search, color: whiteColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
                   defaultSpacer,
                   DefaultText(
                     title: AppLocalizations.of(context)!.categories,
@@ -113,8 +136,6 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                   //     ],
                   //   ),
                   // ),
-                  defaultSpacer,
-
                   defaultSpacerSmall,
 
                   Expanded(

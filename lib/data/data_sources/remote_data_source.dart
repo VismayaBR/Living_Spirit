@@ -1,3 +1,5 @@
+
+
 import 'package:livingspirit/data/core/api_constants.dart';
 import 'package:livingspirit/data/models/brand_list_model.dart';
 import 'package:livingspirit/data/models/product_details_model.dart';
@@ -35,7 +37,8 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<ProductListModel> productList(Map<String, dynamic> params) async {
     String url =
         '${ApiConstants.productList}?per_page=${params["per_page"]}'
-        '&size=${params["size"]}'
+        // '&size=${params["size"]}'
+        '&mainCategory=${params["main_category"]}'
         // '&in_stock_only=1'
         // '&branch_id=${params["branch_id"]}'
         '&search=${params["search"]}';
@@ -58,8 +61,8 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   @override
   Future<BrandListModel> brandList(Map<String, dynamic> params) async {
     final response = await _apiClient.get(
-      // "${ApiConstants.brandList}?size=${params["size"]}",
-      ApiConstants.brandList,
+      "${ApiConstants.brandList}?main_category=${params["main_category"]}",
+      // ApiConstants.brandList,
       params: params,
     );
     return BrandListModel.fromJson(response);
@@ -69,8 +72,16 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<ProductDetailsModel> productDetails(
     Map<String, dynamic> params,
   ) async {
+     String detailUrl =
+        ApiConstants.productDetails;
+        if (params["product"] != null) {
+           detailUrl += '?id=${params["product"]}';
+    }
+     if (params["barcode"] != null) {
+           detailUrl += '?barcode=${params["barcode"]}';
+    }
     final response = await _apiClient.get(
-      "${ApiConstants.productDetails}/${params["product"]}",
+      detailUrl,
       params: params,
     );
     return ProductDetailsModel.fromJson(response);

@@ -1,3 +1,4 @@
+
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -88,29 +89,29 @@ class _ProductDeatailsCarouselPageState
               ),
             ),
           ),
-          if (widget.image_360s.isNotEmpty)
-            Positioned(
-              right: defaultPadding * .8,
-              bottom: defaultPadding * .4,
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed(
-                    RouteList.product360View,
-                    arguments: widget.image_360s,
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(defaultPadding),
-                  ),
-                  child: SvgPicture.asset(
-                    "assets/ic_360.svg",
-                    width: MediaQuery.of(context).size.width * .1,
-                  ),
-                ),
-              ),
-            ),
+          // if (widget.image_360s.isNotEmpty)
+          //   Positioned(
+          //     right: defaultPadding * .8,
+          //     bottom: defaultPadding * .4,
+          //     child: GestureDetector(
+          //       onTap: () {
+          //         Get.toNamed(
+          //           RouteList.product360View,
+          //           arguments: widget.image_360s,
+          //         );
+          //       },
+          //       child: Container(
+          //         decoration: BoxDecoration(
+          //           color: Colors.transparent,
+          //           borderRadius: BorderRadius.circular(defaultPadding),
+          //         ),
+          //         child: SvgPicture.asset(
+          //           "assets/ic_360.svg",
+          //           width: MediaQuery.of(context).size.width * .1,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );

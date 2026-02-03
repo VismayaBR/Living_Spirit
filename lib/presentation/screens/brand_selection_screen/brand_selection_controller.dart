@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/domain/entities/app_error.dart';
@@ -49,7 +50,7 @@ class BrandSelectionController extends ChangeNotifier {
   }
 
   getData() async {
-    final response = await brandListUseCase(BrandListParams(size: args.size));
+    final response = await brandListUseCase(BrandListParams(mainCategory: args.mainCategory));
     response.fold((l) => appError = l, (r) {
       if (r.success) {
 

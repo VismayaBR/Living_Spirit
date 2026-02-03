@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/domain/entities/app_error.dart';
@@ -41,7 +43,8 @@ class ProductListScreenController extends ChangeNotifier {
     final response = await productListUseCase(
       ProductListParams(
         brandId: args.brandId,
-        size: args.size,
+        // size: args.size,
+        mainCategory: args.mainCategory,
         page: currentPage,
         search: searchController.text,
         sortDirection: sortOrder,

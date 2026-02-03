@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/l10n/app_localizations.dart';
@@ -59,7 +60,7 @@ class BrandSelectionScreen extends StatelessWidget {
                         fontFamily: "Poppins-Medium",
                       ),
                       DefaultText(
-                        title: brandSelectionController.args.size!,
+                        title: brandSelectionController.args.mainCategory!,
                         fontSize: isTab()
                             ? defaultPadding * 1.5
                             : defaultPadding * .9,

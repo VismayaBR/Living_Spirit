@@ -13,7 +13,6 @@ class CategorySelectionController extends ChangeNotifier {
 
   CategoryListUseCase categoryListUseCase = Get.find();
 
-
   List<CategoryListEntity> categories = [];
 
   // OptionEntity args = Get.arguments;
@@ -42,12 +41,20 @@ class CategorySelectionController extends ChangeNotifier {
   getData() async {
     isLoading = true;
     final response = await categoryListUseCase(NoParams());
-    response.fold((l) => appError = l, (r) {
-      if (r.success) {
-        consoleLog(r.data);
+     response.fold(
+    (l) {
+      consoleLog("API ERROR:");
+      consoleLog(l);
+      appError = l;
+    },
+    (r) {
+      if (r.success == true && r.data != null) {
         categories = r.data;
+      } else {
+        consoleLog("API SUCCESS BUT EMPTY DATA");
       }
-    });
+    },
+  );
     isLoading = false;
     notifyListeners();
   }

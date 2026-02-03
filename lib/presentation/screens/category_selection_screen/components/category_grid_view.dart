@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/domain/entities/category_entity.dart';
@@ -61,7 +62,7 @@ class CategoryGridView extends StatelessWidget {
                         arguments: TypeEntity(
                           from: "category",
                           isEnglish: isEnglishSelected!,
-                          size: categorySelectionController
+                          mainCategory: categorySelectionController
                               .selectedCategory,
                           // branch: categorySelectionController.args.optionId,
                         ),

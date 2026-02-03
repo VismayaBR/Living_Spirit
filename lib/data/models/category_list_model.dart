@@ -34,25 +34,21 @@ class CategoryListModel {
 }
 
 class Datum extends CategoryListEntity{
-    final int id;
+    final String id;
     final String name;
-    final int productCount;
 
     const Datum({
         required this.id,
         required this.name,
-        required this.productCount,
     }) : super(categories: name);
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json["id"],
+        id: json["id"].toString(),
         name: json["name"],
-        productCount: json["product_count"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "product_count": productCount,
     };
 }
