@@ -41,20 +41,20 @@ class CategorySelectionController extends ChangeNotifier {
   getData() async {
     isLoading = true;
     final response = await categoryListUseCase(NoParams());
-     response.fold(
-    (l) {
-      consoleLog("API ERROR:");
-      consoleLog(l);
-      appError = l;
-    },
-    (r) {
-      if (r.success == true && r.data != null) {
-        categories = r.data;
-      } else {
-        consoleLog("API SUCCESS BUT EMPTY DATA");
-      }
-    },
-  );
+    response.fold(
+      (l) {
+        consoleLog("API ERROR TYPE: ${l.runtimeType}");
+        consoleLog("API ERROR: $l");
+        appError = l;
+      },
+      (r) {
+        if (r.success == true && r.data != null) {
+          categories = r.data;
+        } else {
+          consoleLog("API SUCCESS BUT EMPTY DATA");
+        }
+      },
+    );
     isLoading = false;
     notifyListeners();
   }
