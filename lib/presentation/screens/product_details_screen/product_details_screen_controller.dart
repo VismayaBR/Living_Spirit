@@ -10,7 +10,6 @@ import 'package:livingspirit/domain/entities/product_entity.dart';
 import 'package:livingspirit/domain/params/product_details_args.dart';
 import 'package:livingspirit/domain/params/product_details_params.dart';
 import 'package:livingspirit/domain/usecases/product_details_usecase.dart';
-import 'package:livingspirit/presentation/screens/product_list_screen/product_list_screen_controller.dart';
 
 class ProductDetailsScreenController extends ChangeNotifier {
   ProductDetailsArgs args = Get.arguments;
@@ -27,7 +26,7 @@ class ProductDetailsScreenController extends ChangeNotifier {
 
   
 
-  ProductListScreenController productListScreenController = Get.find();
+  // ProductListScreenController productListScreenController = Get.find();
 
   Timer? apiTimer;
   static const Duration refreshInterval = Duration(minutes: 2);
@@ -130,10 +129,13 @@ List<String> get availableBranches {
 
   getData() async {
   appError = null;
+  // ProductListScreenController productListScreenController = Get.find();
 
   final int? previousSelectedIndex = selectedCategoryIndex;
 
   final response = await productDetailsUseCase(
+    args.barcode!=null?
+    ProductDetailsParams(barcode: args.barcode):
     ProductDetailsParams(id: args.id),
   );
 
@@ -162,9 +164,9 @@ List<String> get availableBranches {
           productBanner = r.data.images!;
         }
 
-        if (r.data.totalStock == "0") {
-          productListScreenController.getData();
-        }
+        // if (r.data.totalStock == "0") {
+        //   productListScreenController.getData();
+        // }
       }
     },
   );

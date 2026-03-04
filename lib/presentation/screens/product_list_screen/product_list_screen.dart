@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/l10n/app_localizations.dart';
@@ -33,30 +32,32 @@ class ProductListScreen extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-       appBar: AppBar(
-            leading: GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: Icon(
-                Icons.keyboard_arrow_left_outlined,
-                color: blackColor,
-                size: isTab()?defaultPadding*2:defaultPadding,
-              ),
-            ),
-            titleSpacing: -(defaultPadding * .5),
-            title: SizedBox(width: MediaQuery.of(context).size.width * .85),
+      appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Icon(
+            Icons.keyboard_arrow_left_outlined,
+            color: blackColor,
+            size: isTab() ? defaultPadding * 2 : defaultPadding,
           ),
+        ),
+        titleSpacing: -(defaultPadding * .5),
+        title: SizedBox(width: MediaQuery.of(context).size.width * .85),
+      ),
       body: AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
           return Padding(
-            padding: const EdgeInsets.all(defaultPadding * 0.5),
+            padding: const EdgeInsets.only(
+              left: defaultPadding * 0.5,
+              right: defaultPadding * 0.5,
+              bottom: defaultPadding * 0.5,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                defaultSpacer,
-                defaultSpacer,
                 Image.asset(
                   "assets/logo.png",
                   width: isTab() ? defaultPadding * 8 : defaultPadding * 5,
@@ -70,48 +71,55 @@ class ProductListScreen extends StatelessWidget {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           DefaultText(
                             title: controller.args.isEnglish
-                                ? "${AppLocalizations.of(context)!.selected_category} : "
+                                ? "${AppLocalizations.of(context)!.category} : "
                                 : "الحجم المحدد : ",
                             fontSize: isTab()
                                 ? defaultPadding * 1.5
                                 : defaultPadding * .8,
                             fontFamily: "Poppins-Medium",
                             isBold: true,
+                            color: labelTextColor,
                           ),
-                          DefaultText(
-                            title: controller.args.mainCategory.toString(),
-                            fontSize: isTab()
-                                ? defaultPadding * 1.5
-                                : defaultPadding * .8,
-                            fontFamily: "Poppins-Medium",
+                          Flexible(
+                            child: DefaultText(
+                              title: controller.args.mainCategory.toString(),
+                              fontSize: isTab()
+                                  ? defaultPadding * 1.5
+                                  : defaultPadding * .8,
+                              fontFamily: "Poppins-Medium",
+                              maxLine: 1,
+                            ),
                           ),
                         ],
                       ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           DefaultText(
                             title: controller.args.isEnglish
-                                ? "${AppLocalizations.of(context)!.selected_brand} : "
+                                ? "${AppLocalizations.of(context)!.brand} : "
                                 : "العلامة التجارية المختارة : ",
                             fontSize: isTab()
                                 ? defaultPadding * 1.5
                                 : defaultPadding * .8,
                             fontFamily: "Poppins-Medium",
                             isBold: true,
+                            color: labelTextColor,
                           ),
-                          Expanded(
+                          Flexible(
                             child: DefaultText(
                               title: controller.args.brandName,
-                              maxLine: 1,
-                              
                               fontSize: isTab()
                                   ? defaultPadding * 1.5
                                   : defaultPadding * .8,
                               fontFamily: "Poppins-Medium",
+                              maxLine: 1,
                             ),
                           ),
                         ],
@@ -119,6 +127,7 @@ class ProductListScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                defaultSpacerSmall,
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: defaultPadding,
@@ -148,10 +157,8 @@ class ProductListScreen extends StatelessWidget {
                           Expanded(
                             child: TextField(
                               controller: controller.searchController,
-                              onChanged: (value) => {
-                                controller.getData()
-                              },
-                              
+                              onChanged: (value) => {controller.getData()},
+
                               decoration: InputDecoration(
                                 hintText: controller.args.isEnglish
                                     ? "Search products"
@@ -175,7 +182,9 @@ class ProductListScreen extends StatelessWidget {
                             // ignore: sort_child_properties_last
                             child: Image.asset(
                               "assets/sort.png",
-                              height:isTab()?defaultPadding*2: defaultPadding,
+                              height: isTab()
+                                  ? defaultPadding * 2
+                                  : defaultPadding,
                             ),
                             // icon: const Icon(Icons.sort),
                             shape: RoundedRectangleBorder(
@@ -188,21 +197,20 @@ class ProductListScreen extends StatelessWidget {
                               PopupMenuItem(
                                 value: "asc",
                                 child: DefaultText(
-                                 title:  controller.args.isEnglish
+                                  title: controller.args.isEnglish
                                       ? "Price Low → High"
                                       : "السعر من الأقل للأعلى",
-                                      fontFamily: "Poppins-Regular",
+                                  fontFamily: "Poppins-Regular",
                                 ),
                               ),
-                            const PopupMenuDivider(height: 1),
+                              const PopupMenuDivider(height: 1),
                               PopupMenuItem(
-                                
                                 value: "desc",
                                 child: DefaultText(
-                                title:   controller.args.isEnglish
+                                  title: controller.args.isEnglish
                                       ? "Price High → Low"
                                       : "السعر من الأعلى للأقل",
-                                       fontFamily: "Poppins-Regular",
+                                  fontFamily: "Poppins-Regular",
                                 ),
                               ),
                             ],
@@ -213,7 +221,7 @@ class ProductListScreen extends StatelessWidget {
                   ),
                 ),
 
-                // defaultSpacerSmall,
+                defaultSpacer,
                 controller.products.isEmpty && controller.isLoading == false
                     ? Expanded(
                         child: SingleChildScrollView(
@@ -257,7 +265,6 @@ class ProductListScreen extends StatelessWidget {
                                 return ProductCard(
                                   productEntity: controller.products[index],
                                   isEnglish: controller.args.isEnglish,
-                                  
                                 );
                               }
                             } else {
@@ -282,9 +289,7 @@ class ProductListScreen extends StatelessWidget {
           child: DefaultButton(
             text: AppLocalizations.of(context)!.back_to_home,
             onPressed: () {
-              Get.until(
-                (route) => Get.currentRoute == RouteList.initial,
-              );
+              Get.until((route) => Get.currentRoute == RouteList.initial);
             },
             borderRadius: 0,
             isLoading: false,

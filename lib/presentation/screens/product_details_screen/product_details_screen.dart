@@ -11,6 +11,7 @@ import 'package:livingspirit/presentation/screens/product_details_screen/product
 import 'package:livingspirit/presentation/theme/theme.dart';
 import 'package:livingspirit/presentation/widgets/default_button.dart';
 import 'package:livingspirit/presentation/widgets/default_text.dart';
+import 'package:livingspirit/presentation/widgets/loading_widget.dart';
 import 'package:livingspirit/presentation/widgets/skelton.dart';
 import 'package:livingspirit/utils/formater.dart';
 
@@ -57,7 +58,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             titleSpacing: -(defaultPadding * .5),
             title: SizedBox(width: MediaQuery.of(context).size.width * .85),
           ),
-          body: SingleChildScrollView(
+          body: productDetailsScreenController.isLoading?Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LoadingWidgetBounce(),
+            ],
+          ): !productDetailsScreenController.isLoading && productDetailsScreenController.productData==null?
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DefaultText(title: "Invalid Barcode!"),
+                ],
+              ),
+            ],
+          )
+          : SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding,
@@ -79,6 +97,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ? MainAxisAlignment.end
                               : MainAxisAlignment.start,
                           children: [
+                            if(productDetailsScreenController
+                                          .productData!=null)
                             Expanded(
                               child: DefaultText(
                                 // style: Theme.of(context).textTheme.bodyLarge!
@@ -86,7 +106,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 //       fontSize:
                                 //       color: blackColor,
                                 //       fontWeight: FontWeight.bold,
-
+            
                                 // ),
                                 title:
                                     productDetailsScreenController
@@ -152,7 +172,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     image_360s: productDetailsScreenController.image_360s,
                   ),
                   defaultSpacer,
-
+            
                   Text(
                     AppLocalizations.of(context)!.available_category,
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -176,7 +196,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     productDetailsScreenController
                                         .selectedCategoryIndex ==
                                     index;
-
+            
                                 return Container(
                                   margin: const EdgeInsets.only(
                                     right: defaultPadding * .5,
@@ -210,12 +230,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           )
                         : SizedBox.shrink(),
                   ),
-
+            
                   defaultSpacerSmall,
                   productDetailsScreenController.isLoading == true
                       ? Skelton(child: Text("data"))
                       : Row(
                           children: [
+                            if(productDetailsScreenController.productData!=null)
                             Expanded(
                               child: RichText(
                                 textAlign: TextAlign.start,
@@ -237,7 +258,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                     ),
-
+            
                                     //  TextSpan(
                                     //   text: '\u0024 534,33',
                                     //   style: TextStyle(
@@ -259,8 +280,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ),
                             ),
-
+            
                             defaultSpacerHorizontalSmall,
+                            if(productDetailsScreenController.productData!=null)
                             Container(
                               padding: EdgeInsets.symmetric(
                                 horizontal: defaultPadding * .7,
@@ -311,7 +333,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ],
                         ),
                   defaultSpacer,
-
+            
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: [
@@ -328,7 +350,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   //             fontWeight: FontWeight.bold,
                   //           ),
                   //     ),
-
+            
                   //   if(productDetailsScreenController.selectedSizeIndex!=null)
                   //      if (productDetailsScreenController
                   //             .availableBranches
@@ -364,7 +386,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           builder: (_) {
                             final status = productDetailsScreenController
                                 .branchAvailabilityStatus;
-
+            
                             switch (status) {
                               // case BranchAvailabilityStatus.availableHere:
                               //   return Text(
@@ -375,13 +397,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               //           fontWeight: FontWeight.bold,
                               //         ),
                               //   );
-
+            
                               case BranchAvailabilityStatus
                                   .availableOtherBranches:
                                 final otherBranches =
                                     productDetailsScreenController
                                         .otherAvailableBranchNames;
-
+            
                                 // 🔴 SAFETY CHECK
                                 if (otherBranches.isEmpty) {
                                   return Text(
@@ -400,7 +422,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 }
                                 final List<String> uniqueBranches =
                                     otherBranches.toSet().toList();
-
+            
                                 // ✅ Only show when branches exist
                                 return Column(
                                   children: [
@@ -419,7 +441,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           ),
                                     ),
                                     defaultSpacerSmall,
-
+            
                                     ...List.generate(
                                       uniqueBranches.length,
                                       (index) => Padding(
@@ -449,7 +471,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ),
                                   ],
                                 );
-
+            
                               case BranchAvailabilityStatus.notAvailable:
                                 return Text(
                                   "Sorry! Currently not available in other branches.",
@@ -467,7 +489,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                       ],
                     ),
-
+            
                   productDetailsScreenController.productData != null &&
                           productDetailsScreenController
                                   .productData!
@@ -479,7 +501,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               .productDescription,
                         )
                       : SizedBox.shrink(),
-
+            
                   defaultSpacer,
                 ],
               ),

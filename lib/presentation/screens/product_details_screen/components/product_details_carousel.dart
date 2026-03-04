@@ -3,9 +3,6 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/route_manager.dart';
-import 'package:livingspirit/presentation/route/route_constants.dart';
 import 'package:livingspirit/presentation/screens/product_details_screen/components/details_banner_item.dart';
 import '../../../../domain/entities/banner_entity.dart';
 import '../../../theme/theme.dart';

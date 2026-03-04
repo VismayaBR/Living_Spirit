@@ -43,32 +43,32 @@ class BrandSelectionScreen extends StatelessWidget {
                 ),
                 defaultSpacer,
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: defaultPadding,
-                  ),
-
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DefaultText(
-                        title: brandSelectionController.args.isEnglish
-                            ? "${AppLocalizations.of(context)!.selected_category} : "
-                            : "المقاس المحدد : ",
-                        fontSize: isTab()
-                            ? defaultPadding * 2
-                            : defaultPadding * .9,
-                        fontFamily: "Poppins-Medium",
-                      ),
-                      DefaultText(
-                        title: brandSelectionController.args.mainCategory!,
-                        fontSize: isTab()
-                            ? defaultPadding * 1.5
-                            : defaultPadding * .9,
-                        fontFamily: "Poppins-Medium",
-                      ),
-                    ],
-                  ),
-                ),
+  padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      DefaultText(
+        title: "${AppLocalizations.of(context)!.category} : ",
+        fontSize: isTab()
+            ? defaultPadding * 2
+            : defaultPadding * .9,
+        fontFamily: "Poppins-Medium",
+      ),
+      Flexible(
+        child: DefaultText(
+          title: brandSelectionController.args.mainCategory!,
+          fontSize: isTab()
+              ? defaultPadding * 1.5
+              : defaultPadding * .9,
+          fontFamily: "Poppins-Medium",
+          maxLine: 1,
+         
+        ),
+      ),
+    ],
+  ),
+),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: defaultPadding,

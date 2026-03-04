@@ -1,8 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:livingspirit/domain/params/product_details_args.dart';
 import 'package:livingspirit/l10n/app_localizations.dart';
+import 'package:livingspirit/presentation/route/route_constants.dart';
 import 'package:livingspirit/presentation/screens/category_selection_screen/components/category_grid_view.dart';
 import 'package:livingspirit/presentation/screens/category_selection_screen/category_selection_controller.dart';
 import 'package:livingspirit/presentation/theme/theme.dart';
@@ -18,37 +18,47 @@ class CategorySelectionScreen extends StatefulWidget {
 }
 
 class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
+  CategorySelectionController categorySelectionController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    categorySelectionController = Get.find();
+    categorySelectionController.getData(); // ✅ CALL ONCE
+  }
+
   bool isEnglishSelected = true;
   String? selectedSize;
 
   @override
   Widget build(BuildContext context) {
-    final CategorySelectionController categorySelectionController = Get.find();
-    categorySelectionController.getData();
+    // final CategorySelectionController categorySelectionController = Get.find();
+    // categorySelectionController.getData();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.keyboard_arrow_left_outlined,
-            color: blackColor,
-            size: isTab() ? defaultPadding * 2 : defaultPadding,
+            leading: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Icon(
+                Icons.keyboard_arrow_left_outlined,
+                color: blackColor,
+                size: isTab()?defaultPadding*2:defaultPadding,
+              ),
+            ),
+            titleSpacing: -(defaultPadding * .5),
+            title: SizedBox(width: MediaQuery.of(context).size.width * .85),
           ),
-        ),
-        titleSpacing: -(defaultPadding * .5),
-        title: SizedBox(width: MediaQuery.of(context).size.width * .85),
-      ),
       body: SafeArea(
         child: AnimatedBuilder(
           animation: categorySelectionController,
           builder: (context, child) {
             return Padding(
-              padding: const EdgeInsets.all(defaultPadding),
+              padding: const EdgeInsets.only(left: defaultPadding,right: defaultPadding,bottom: defaultPadding),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Image.asset(
                     "assets/logo.png",
@@ -57,13 +67,53 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                   defaultSpacer,
                   Row(
                     children: [
-                      Expanded(flex: 5, child: TextFormField()),
+                      Expanded(
+                        flex: 5,
+                        child: TextFormField(
+                          controller:
+                              categorySelectionController.barcodeController,
+                          focusNode:
+                              categorySelectionController.barcodeFocusNode,
+                          autofocus: true,
+                          decoration: const InputDecoration(
+                            hintText: "Scan barcode",
+                            border: OutlineInputBorder(),
+                          ),
+                          onFieldSubmitted: (value) {
+                            // Called when scanner sends ENTER
+                            // categorySelectionController.handleBarcode(value);
+                            Get.toNamed(
+                              RouteList.productDetailsScreen,
+                              arguments: ProductDetailsArgs(
+                                barcode: categorySelectionController
+                                    .barcodeController
+                                    .text,
+                                isEnglish: true,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                       defaultSpacerHorizontalSmall,
                       GestureDetector(
-                        onTap: (){},
+                        onTap: () {
+                          Get.toNamed(
+                            RouteList.productDetailsScreen,
+                            arguments: ProductDetailsArgs(
+                              barcode: categorySelectionController
+                                  .barcodeController
+                                  .text,
+                              isEnglish: true,
+                            ),
+                          );
+                          // categorySelectionController.getProduct(categorySelectionController.barcodeController.text);
+                        },
                         child: Container(
-                          decoration:BoxDecoration(shape: BoxShape.circle,color: blackColor,),
-                          
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: blackColor,
+                          ),
+
                           child: Padding(
                             padding: const EdgeInsets.all(9.0),
                             child: Center(
@@ -83,59 +133,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                         : defaultPadding * .9,
                   ),
 
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(
-                  //     horizontal: defaultPadding * .8,
-                  //   ),
-                  //   child: Row(
-                  //     children: [
-                  //       Expanded(
-                  //         child: DefaultButton(
-                  //           height: isTab()
-                  //               ? defaultPadding * 3
-                  //               : defaultPadding * 2.5,
-                  //           text: AppLocalizations.of(context)!.what_is_your_size,
-                  //           fontSize:isTab()?defaultPadding*.7: defaultPadding * .65,
-                  //           fontFamily: "Poppins-Regular",
-                  //           onPressed: () {
-                  //             setState(() => isEnglishSelected = true);
-                  //           },
-                  //           borderRadius: 5,
-                  //           isLoading: false,
-                  //           backgroundColor: isEnglishSelected
-                  //               ? primaryColor
-                  //               : whiteColor,
-                  //           textColor: isEnglishSelected
-                  //               ? whiteColor
-                  //               : primaryColor,
-                  //         ),
-                  //       ),
-                  //       defaultSpacerHorizontalSmall,
-                  //       Expanded(
-                  //         child: DefaultButton(
-                  //           height: isTab()
-                  //               ? defaultPadding * 3
-                  //               : defaultPadding * 2.5,
-                  //           fontSize: isTab()
-                  //               ?defaultPadding*.7: defaultPadding * .9,
-                  //           fontFamily: "Poppins-Regular",
-                  //           text: "كم مقاسك؟",
-                  //           borderRadius: 5,
-                  //           onPressed: () {
-                  //             setState(() => isEnglishSelected = false);
-                  //           },
-                  //           isLoading: false,
-                  //           backgroundColor: !isEnglishSelected
-                  //               ? primaryColor
-                  //               : whiteColor,
-                  //           textColor: !isEnglishSelected
-                  //               ? whiteColor
-                  //               : primaryColor,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  
                   defaultSpacerSmall,
 
                   Expanded(
@@ -152,75 +150,6 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
         ),
       ),
 
-      /// 🔘 Bottom Buttons
-      // bottomNavigationBar: Padding(
-      //   padding: const EdgeInsets.symmetric(
-      //     horizontal: defaultPadding,
-      //     vertical: defaultPadding * .2,
-      //   ),
-      //   child: SafeArea(
-      //     child: Row(
-      //       children: [
-      //         Expanded(
-      //           child: DefaultButton(
-      //             height: isTab() ? defaultPadding * 3 : defaultPadding * 2.5,
-      //             text: isEnglishSelected
-      //                 ? AppLocalizations.of(context)!.back
-      //                 : "خلف",
-      //             onPressed: () {
-      //               Get.back();
-      //             },
-      //             isLoading: false,
-      //           ),
-      //         ),
-      //         defaultSpacerHorizontalSmall,
-      //         Expanded(
-      //           child: DefaultButton(
-      //             height: isTab() ? defaultPadding * 3 : defaultPadding * 2.5,
-      //             text: isEnglishSelected
-      //                 ? AppLocalizations.of(context)!.next
-      //                 : "التالي",
-      //             onPressed: () {
-      //               consoleLog(">>>>>>>>>>>>>>>${sizeSelectionController
-      //                         .selectedSize}");
-      //               // if (sizeSelectionController.selectedSizeIndex != -1) {
-      //               //   Get.toNamed(
-      //               //     RouteList.brandSelectionScreen,
-      //               //     arguments: TypeEntity(
-      //               //       from: "size",
-      //               //       isEnglish: isEnglishSelected,
-      //               //       size: sizeSelectionController
-      //               //                     .otherSizes[sizeSelectionController
-      //               //                         .selectedSizeIndex]
-      //               //                     .sizes,
-      //               //       branch: sizeSelectionController.args.optionId,
-      //               //     ),
-      //               //   );
-      //               // }
-
-      //               if (sizeSelectionController.selectedSizeIndex != -1) {
-      //                 consoleLog("branch : ${sizeSelectionController.args.optionId}");
-      //                 Get.toNamed(
-      //                   RouteList.brandSelectionScreen,
-      //                   arguments: TypeEntity(
-      //                     from: "size",
-      //                     isEnglish: isEnglishSelected,
-      //                     size: sizeSelectionController
-      //                         .selectedSize,
-      //                     branch: sizeSelectionController.args.optionId,
-      //                   ),
-      //                 );
-      //               } else {
-      //                 showMessage("Please select a size!");
-      //               }
-      //             },
-      //             isLoading: false,
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

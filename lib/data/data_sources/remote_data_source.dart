@@ -61,7 +61,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   @override
   Future<BrandListModel> brandList(Map<String, dynamic> params) async {
     final response = await _apiClient.get(
-      "${ApiConstants.brandList}?main_category=${params["main_category"]}",
+      "${ApiConstants.brandList}?main_category_id=${params["main_category"]}",
       // ApiConstants.brandList,
       params: params,
     );

@@ -7,7 +7,6 @@ import 'package:livingspirit/presentation/route/route_constants.dart';
 import 'package:livingspirit/presentation/screens/brand_selection_screen/brand_selection_controller.dart';
 import 'package:livingspirit/presentation/screens/brand_selection_screen/components/barnd_item.dart';
 import 'package:livingspirit/presentation/widgets/default_loading_card.dart';
-import 'package:livingspirit/utils/debug_utils.dart';
 import 'package:livingspirit/utils/snackbar_utils.dart';
 import '../../../../domain/entities/brand_entity.dart';
 import '../../../theme/theme.dart';

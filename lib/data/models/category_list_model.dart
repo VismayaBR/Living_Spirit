@@ -40,7 +40,7 @@ class Datum extends CategoryListEntity{
     const Datum({
         required this.id,
         required this.name,
-    }) : super(categories: name);
+    }) : super(categories: name, categoryId: id);
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"].toString(),
