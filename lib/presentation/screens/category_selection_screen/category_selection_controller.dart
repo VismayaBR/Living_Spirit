@@ -15,6 +15,7 @@ class CategorySelectionController extends ChangeNotifier {
   int selectedTab = 0;
   int selectedCategoryIndex = -1;
   String? selectedCategory;
+  String? selectedCategoryName;
 
   CategoryListUseCase categoryListUseCase = Get.find();
 
@@ -63,6 +64,7 @@ class CategorySelectionController extends ChangeNotifier {
   selectCategory(int index) {
     selectedCategoryIndex = index;
     selectedCategory = categories[index].categoryId;
+    selectedCategoryName = categories[index].categories;
     notifyListeners();
     consoleLog(selectedCategoryIndex);
   }

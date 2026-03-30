@@ -86,7 +86,7 @@ class ProductListScreen extends StatelessWidget {
                           ),
                           Flexible(
                             child: DefaultText(
-                              title: controller.args.mainCategory.toString(),
+                              title: controller.args.mainCategoryName.toString(),
                               fontSize: isTab()
                                   ? defaultPadding * 1.5
                                   : defaultPadding * .8,

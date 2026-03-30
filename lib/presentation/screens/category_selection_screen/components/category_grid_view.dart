@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/domain/entities/category_entity.dart';
@@ -10,8 +9,12 @@ import 'package:livingspirit/presentation/widgets/default_loading_card.dart';
 import '../../../theme/theme.dart';
 
 class CategoryGridView extends StatelessWidget {
-  const CategoryGridView({Key? key, required this.categoryList, this.isLoading = false,this.isEnglishSelected})
-    : super(key: key);
+  const CategoryGridView({
+    Key? key,
+    required this.categoryList,
+    this.isLoading = false,
+    this.isEnglishSelected,
+  }) : super(key: key);
 
   final List<CategoryListEntity> categoryList;
   final bool isLoading;
@@ -49,7 +52,8 @@ class CategoryGridView extends StatelessWidget {
                   } else {
                     final size = categoryList[index];
                     final isSelected =
-                        categorySelectionController.selectedCategoryIndex == index;
+                        categorySelectionController.selectedCategoryIndex ==
+                        index;
 
                     return Center(
                       child: CategoryItem(
@@ -57,22 +61,25 @@ class CategoryGridView extends StatelessWidget {
                         isSelected: isSelected,
                         onTap: () {
                           categorySelectionController.selectCategory(index);
-                      Get.toNamed(
-                        RouteList.brandSelectionScreen,
-                        arguments: TypeEntity(
-                          from: "category",
-                          isEnglish: isEnglishSelected!,
-                          mainCategory: categorySelectionController
-                              .selectedCategory,
-                          // branch: categorySelectionController.args.optionId,
-                        ),
-                      );
+                          Get.toNamed(
+                            RouteList.brandSelectionScreen,
+                            arguments: TypeEntity(
+                              from: "category",
+                              isEnglish: isEnglishSelected!,
+                              mainCategory:
+                                  categorySelectionController.selectedCategory,
+                              categoryName: categorySelectionController
+                                  .selectedCategoryName,
+
+                              // branch: categorySelectionController.args.optionId,
+                            ),
+                          );
                         },
                       ),
                     );
                   }
                 }, childCount: isLoading ? 20 : categoryList.length),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: isTablet ? 4 : 3,
                   childAspectRatio: isTablet ? .7 : .9,
                   mainAxisSpacing: isTablet

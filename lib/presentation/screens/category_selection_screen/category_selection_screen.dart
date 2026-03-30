@@ -8,6 +8,7 @@ import 'package:livingspirit/presentation/screens/category_selection_screen/cate
 import 'package:livingspirit/presentation/theme/theme.dart';
 import 'package:livingspirit/presentation/widgets/default_text.dart';
 import 'package:livingspirit/utils/formater.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class CategorySelectionScreen extends StatefulWidget {
   const CategorySelectionScreen({super.key});
@@ -38,25 +39,29 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-            leading: GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: Icon(
-                Icons.keyboard_arrow_left_outlined,
-                color: blackColor,
-                size: isTab()?defaultPadding*2:defaultPadding,
-              ),
-            ),
-            titleSpacing: -(defaultPadding * .5),
-            title: SizedBox(width: MediaQuery.of(context).size.width * .85),
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Icon(
+            Icons.keyboard_arrow_left_outlined,
+            color: blackColor,
+            size: isTab() ? defaultPadding * 2 : defaultPadding,
           ),
+        ),
+        titleSpacing: -(defaultPadding * .5),
+        title: SizedBox(width: MediaQuery.of(context).size.width * .85),
+      ),
       body: SafeArea(
         child: AnimatedBuilder(
           animation: categorySelectionController,
           builder: (context, child) {
             return Padding(
-              padding: const EdgeInsets.only(left: defaultPadding,right: defaultPadding,bottom: defaultPadding),
+              padding: const EdgeInsets.only(
+                left: defaultPadding,
+                right: defaultPadding,
+                bottom: defaultPadding,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -67,6 +72,26 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                   defaultSpacer,
                   Row(
                     children: [
+                      GestureDetector(
+                        onTap: () async {
+                          var res = await Get.to(() => const SimpleBarcodeScannerPage());
+                          if (res is String && res != '-1') {
+                            categorySelectionController.barcodeController.text = res;
+                            Get.toNamed(
+                              RouteList.productDetailsScreen,
+                              arguments: ProductDetailsArgs(
+                                barcode: res,
+                                isEnglish: true,
+                              ),
+                            );
+                          }
+                        },
+                        child: Icon(
+                          Icons.qr_code_scanner,
+                          size: isTab() ? defaultPadding * 2 : defaultPadding,
+                        ),
+                      ),
+                      defaultSpacerHorizontalSmall,
                       Expanded(
                         flex: 5,
                         child: TextFormField(
@@ -133,7 +158,6 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                         : defaultPadding * .9,
                   ),
 
-                  
                   defaultSpacerSmall,
 
                   Expanded(
@@ -149,7 +173,6 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
           },
         ),
       ),
-
     );
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:livingspirit/l10n/app_localizations.dart';
@@ -6,6 +5,7 @@ import 'package:livingspirit/presentation/screens/brand_selection_screen/brand_s
 import 'package:livingspirit/presentation/screens/brand_selection_screen/components/brand_grid_view.dart';
 import 'package:livingspirit/presentation/theme/theme.dart';
 import 'package:livingspirit/presentation/widgets/default_text.dart';
+import 'package:livingspirit/utils/debug_utils.dart';
 import 'package:livingspirit/utils/formater.dart';
 
 class BrandSelectionScreen extends StatelessWidget {
@@ -15,12 +15,11 @@ class BrandSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     BrandSelectionController brandSelectionController = Get.find();
     brandSelectionController.getData();
-
     return AnimatedBuilder(
       animation: brandSelectionController,
       builder: (context, child) {
         return Scaffold(
-           appBar: AppBar(
+          appBar: AppBar(
             leading: GestureDetector(
               onTap: () {
                 Get.back();
@@ -28,7 +27,7 @@ class BrandSelectionScreen extends StatelessWidget {
               child: Icon(
                 Icons.keyboard_arrow_left_outlined,
                 color: blackColor,
-                size: isTab()?defaultPadding*2:defaultPadding,
+                size: isTab() ? defaultPadding * 2 : defaultPadding,
               ),
             ),
             titleSpacing: -(defaultPadding * .5),
@@ -43,32 +42,33 @@ class BrandSelectionScreen extends StatelessWidget {
                 ),
                 defaultSpacer,
                 Padding(
-  padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      DefaultText(
-        title: "${AppLocalizations.of(context)!.category} : ",
-        fontSize: isTab()
-            ? defaultPadding * 2
-            : defaultPadding * .9,
-        fontFamily: "Poppins-Medium",
-      ),
-      Flexible(
-        child: DefaultText(
-          title: brandSelectionController.args.mainCategory!,
-          fontSize: isTab()
-              ? defaultPadding * 1.5
-              : defaultPadding * .9,
-          fontFamily: "Poppins-Medium",
-          maxLine: 1,
-         
-        ),
-      ),
-    ],
-  ),
-),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: defaultPadding,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      DefaultText(
+                        title: "${AppLocalizations.of(context)!.category} : ",
+                        fontSize: isTab()
+                            ? defaultPadding * 2
+                            : defaultPadding * .9,
+                        fontFamily: "Poppins-Medium",
+                      ),
+                      Flexible(
+                        child: DefaultText(
+                          title: brandSelectionController.args.categoryName!,
+                          fontSize: isTab()
+                              ? defaultPadding * 1.5
+                              : defaultPadding * .9,
+                          fontFamily: "Poppins-Medium",
+                          maxLine: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: defaultPadding,
@@ -92,7 +92,6 @@ class BrandSelectionScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: BrandGridView(
-                    
                     brandList: brandSelectionController.brandList,
                     isLoadingMore: brandSelectionController.isLoadingMore,
                     moreItemsAvailable:
@@ -104,7 +103,6 @@ class BrandSelectionScreen extends StatelessWidget {
               ],
             ),
           ),
-          
         );
       },
     );

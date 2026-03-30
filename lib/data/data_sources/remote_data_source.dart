@@ -38,7 +38,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     String url =
         '${ApiConstants.productList}?per_page=${params["per_page"]}'
         // '&size=${params["size"]}'
-        '&mainCategory=${params["main_category"]}'
+        '&main_category_id=${params["main_category"]}'
         // '&in_stock_only=1'
         // '&branch_id=${params["branch_id"]}'
         '&search=${params["search"]}';

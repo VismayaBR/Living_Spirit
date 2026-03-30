@@ -104,6 +104,7 @@ class BrandGridView extends StatelessWidget {
                               // size: brandSelectionController.args.size
                               //     .toString(),
                                mainCategory: brandSelectionController.args.mainCategory,
+                               mainCategoryName: brandSelectionController.args.categoryName,
                               isEnglish:
                                   brandSelectionController.args.isEnglish,
                               brandName:
@@ -177,6 +178,8 @@ class BrandGridView extends StatelessWidget {
                                         .brandList[brandSelectionController
                                             .selectedBrandIndex]
                                         .brandName,
+                                        mainCategoryName: brandSelectionController.args.categoryName,
+
                               
                             ),
                           );

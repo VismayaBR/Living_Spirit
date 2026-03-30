@@ -50,6 +50,7 @@ class BrandSelectionController extends ChangeNotifier {
   }
 
   getData() async {
+    
     final response = await brandListUseCase(BrandListParams(mainCategory: args.mainCategory));
     response.fold((l) => appError = l, (r) {
       if (r.success) {

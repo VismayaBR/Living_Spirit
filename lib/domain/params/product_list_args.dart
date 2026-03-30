@@ -8,6 +8,7 @@ class ProductListArgs extends Equatable {
   final String brandName;
   final String? size;
   final String? mainCategory;
+  final String? mainCategoryName;
 
   const ProductListArgs({
     required this.brandId,
@@ -15,6 +16,7 @@ class ProductListArgs extends Equatable {
     required this.brandName,
     this.size,
     this.mainCategory,
+    this.mainCategoryName,
   });
 
   @override
